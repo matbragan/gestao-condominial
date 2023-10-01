@@ -11,4 +11,4 @@ def sheet_reader(
 def expenses_sheet() -> pd.DataFrame:
     sheet_id = '1V3aPdPWMJHLa_Gnra_GJc6pxAWCcaLbQjKyfhVtN2rU'
     page_name = 'expenses_template'
-    return sheet_reader(sheet_id=sheet_id, page_name=page_name)
+    return sheet_reader(sheet_id, page_name)
