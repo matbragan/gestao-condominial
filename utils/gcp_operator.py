@@ -4,11 +4,12 @@ import pandas as pd
 from google.cloud import storage
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS']='gcp_key.json'
+bucket_name = 'extensao-cond'
 
 def gcs_writer(
         dataframe: pd.DataFrame,
-        bucket_name: str,
-        blob_path: str
+        blob_path: str,
+        bucket_name: str = bucket_name
 ) -> None:
     
     storage_client = storage.Client()
@@ -17,8 +18,8 @@ def gcs_writer(
     blob.upload_from_string(dataframe.to_csv(index=False), 'text/csv')
 
 def gcs_reader(
-        bucket_name: str,
-        blob_path: str
+        blob_path: str,
+        bucket_name: str = bucket_name
 ) -> pd.DataFrame:
     
     storage_client = storage.Client()
