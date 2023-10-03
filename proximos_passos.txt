@@ -1,0 +1,6 @@
+[X] mudar estrutura das tabelas silver (descricao, mes, valor)
+[] ver url do BiQuery para uso fora do GCP
+[] ver possibilidade de uso do GCP por usuario
+[] criar tabelas na camada Gold (Silver -> Gold)
+[] estudar sobre AppSheet (interação do usuário na atualização)
+[] estudar Data Viz que será utilizado (Looker, Power BI)
