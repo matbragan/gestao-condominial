@@ -4,9 +4,9 @@ import pandas as pd
 from google.cloud import storage
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS']='gcp_key.json'
-bucket_name = 'extensao-cond'
+bucket_name = 'condominio-datalake'
 
-def gcs_writer(
+def writer(
         dataframe: pd.DataFrame,
         blob_path: str,
         bucket_name: str = bucket_name
@@ -17,7 +17,7 @@ def gcs_writer(
     blob = bucket.blob(blob_path)
     blob.upload_from_string(dataframe.to_csv(index=False), 'text/csv')
 
-def gcs_reader(
+def reader(
         blob_path: str,
         bucket_name: str = bucket_name
 ) -> pd.DataFrame:
