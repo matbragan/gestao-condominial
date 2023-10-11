@@ -3,8 +3,10 @@ import io
 import pandas as pd
 from google.cloud import storage
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']='gcp_key.json'
-bucket_name = 'condominio-datalake'
+from utils import GOOGLE_CREDENTIALS, BUCKET_NAME
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_CREDENTIALS
+bucket_name = BUCKET_NAME
 
 def writer(
         dataframe: pd.DataFrame,
@@ -27,3 +29,17 @@ def reader(
     blob = bucket.blob(blob_path)
     csv_string = blob.download_as_string()
     return pd.read_csv(io.StringIO(csv_string.decode('utf-8')))
+
+def list_files(
+        bucket_name: str = bucket_name
+) -> list:
+    
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket(bucket_name)
+    blobs = bucket.list_blobs()
+    
+    files = []
+    for blob in blobs:
+        files.append(blob.name)
+    
+    return files
