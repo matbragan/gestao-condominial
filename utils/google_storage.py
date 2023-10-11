@@ -8,7 +8,7 @@ from utils import GOOGLE_CREDENTIALS, BUCKET_NAME
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_CREDENTIALS
 bucket_name = BUCKET_NAME
 
-def writer(
+def storage_writer(
         dataframe: pd.DataFrame,
         blob_path: str,
         bucket_name: str = bucket_name
@@ -19,7 +19,7 @@ def writer(
     blob = bucket.blob(blob_path)
     blob.upload_from_string(dataframe.to_csv(index=False), 'text/csv')
 
-def reader(
+def storage_reader(
         blob_path: str,
         bucket_name: str = bucket_name
 ) -> pd.DataFrame:

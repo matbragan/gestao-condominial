@@ -1,0 +1,14 @@
+import pandas as pd
+from utils.google_sheets import sheets_reader
+from utils.google_storage import storage_writer
+
+def generic_writer(file_name) -> None:
+
+    dataframe = sheets_reader(file_name)
+    # se a coluna do dataframe for um index automatico do pandas,
+    # deve haver a reposição da coluna pela 1a linha do dataframe
+    if type(dataframe.columns) == pd.RangeIndex:
+        dataframe.columns = dataframe.iloc[0]
+        dataframe = dataframe[1:].reset_index().drop('index', axis=1)
+
+    storage_writer(dataframe, f'bronze/{file_name}.csv')

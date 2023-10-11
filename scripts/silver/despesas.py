@@ -2,10 +2,10 @@ import json
 import unicodedata
 import pandas as pd
 
-from utils.google_storage import reader
-from utils.google_storage import writer
+from utils.google_storage import storage_reader
+from utils.google_storage import storage_writer
 
-despesas_bronze = reader('bronze/despesas.csv')
+despesas_bronze = storage_reader('bronze/despesas.csv')
 
 
 def categories_dict(
@@ -39,7 +39,7 @@ def snake_case(input_str: str):
     input_str = input_str.lower()
 
     # snake case
-    str_to_snake = [ ' (', ' - ', ' ', '(', '/', '-', "'", '.' ]
+    str_to_snake = [ ' (', ' - ', ' + ', ' ', '(', '/', '-', "'", '.' ]
     for str in str_to_snake:
         input_str = input_str.replace(str, '_')
     input_str = input_str.replace(')', '')
@@ -74,7 +74,7 @@ def expenses_silver(
 
     # filtrando dataframe pela categoria
     if category:
-        dataframe = dataframe[dataframe['descricao'].isin(categories_dict()[category])]
+        dataframe = dataframe[dataframe['descricao'].isin(categories_dict(dataframe)[category])]
 
     # resetando indices do dataframe
     dataframe = dataframe.reset_index().drop('index', axis=1)
@@ -92,7 +92,7 @@ def expenses_silver_writer(
 ) -> None:
     
     writing_dataframe = expenses_silver(dataframe, category)
-    writer(writing_dataframe, f'silver/despesas/{file_name}.csv')
+    storage_writer(writing_dataframe, f'silver/despesas/{file_name}.csv')
     
 
 if __name__ == '__main__':
