@@ -4,3 +4,6 @@
 [] criar tabelas na camada Gold (Silver -> Gold)
 [] estudar sobre AppSheet (interação do usuário na atualização)
 [] estudar Data Viz que será utilizado (Looker, Power BI)
+
+[] criar prototipo da dashboard, para mostrar ao cliente
+[] recebimento das informações pelo cliente
