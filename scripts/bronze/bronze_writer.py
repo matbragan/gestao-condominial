@@ -12,3 +12,15 @@ def generic_writer(file_name) -> None:
         dataframe = dataframe[1:].reset_index().drop('index', axis=1)
 
     storage_writer(dataframe, f'bronze/{file_name}.csv')
+
+if __name__ == '__main__':
+    bronze_tables = [
+        'despesas',
+        'receita',
+        'funcionarios',
+        'moradores',
+        'periodicos'
+    ]
+
+    for table in bronze_tables:
+        generic_writer(table)
