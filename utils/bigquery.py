@@ -5,20 +5,20 @@ from utils.google_storage import list_files
 from utils import GOOGLE_CREDENTIALS, PROJECT_ID, BUCKET_NAME
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_CREDENTIALS
-project_id = PROJECT_ID
-bucket_name = BUCKET_NAME
+
 
 def load_tables(
-        layer: str = 'silver',
-        project_id: str = project_id,
-        bucket_name: str = bucket_name
+        layer: str,
+        project_id: str = PROJECT_ID,
+        bucket_name: str = BUCKET_NAME
 ) -> None:
     
     client = bigquery.Client()
     job_config = bigquery.LoadJobConfig(
         source_format=bigquery.SourceFormat.CSV,
         skip_leading_rows=1,
-        autodetect=True
+        autodetect=True,
+        write_disposition='WRITE_TRUNCATE'
     )
 
     bucket_files = list_files(bucket_name)

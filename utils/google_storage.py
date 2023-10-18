@@ -6,12 +6,12 @@ from google.cloud import storage
 from utils import GOOGLE_CREDENTIALS, BUCKET_NAME
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_CREDENTIALS
-bucket_name = BUCKET_NAME
+
 
 def storage_writer(
         dataframe: pd.DataFrame,
         blob_path: str,
-        bucket_name: str = bucket_name
+        bucket_name: str = BUCKET_NAME
 ) -> None:
     
     storage_client = storage.Client()
@@ -19,9 +19,10 @@ def storage_writer(
     blob = bucket.blob(blob_path)
     blob.upload_from_string(dataframe.to_csv(index=False), 'text/csv')
 
+
 def storage_reader(
         blob_path: str,
-        bucket_name: str = bucket_name
+        bucket_name: str = BUCKET_NAME
 ) -> pd.DataFrame:
     
     storage_client = storage.Client()
@@ -30,8 +31,9 @@ def storage_reader(
     csv_string = blob.download_as_string()
     return pd.read_csv(io.StringIO(csv_string.decode('utf-8')))
 
+
 def list_files(
-        bucket_name: str = bucket_name
+        bucket_name: str = BUCKET_NAME
 ) -> list:
     
     storage_client = storage.Client()
