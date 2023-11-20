@@ -11,11 +11,15 @@ Extensão - Desenvolvimento de Projeto de Business Intelligence - 2023/02
     ~~~sh
     python3 -m venv venv
     ~~~
-2. Instalação dos módulos necessários para rodar o projeto
+2. Inicialização do ambiente virtual
+    ~~~sh
+    source venv/bin/activate
+    ~~~
+3. Instalação dos módulos necessários para rodar o projeto
     ~~~sh
     pip install -r requirements.txt
     ~~~
-3. Criação de um módulo para ajuste dos imports das libs, necessário estar na raiz do projeto
+4. Criação de um módulo para ajuste dos imports das libs, necessário estar na raiz do projeto
     ~~~sh
     pip install -e .
     ~~~
