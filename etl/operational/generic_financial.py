@@ -1,4 +1,3 @@
-import json
 import unicodedata
 import pandas as pd
 
@@ -49,8 +48,7 @@ def snake_case(
 
 
 def generic_treatment(
-        input_dataframe: pd.DataFrame,
-        category: str = None
+        input_dataframe: pd.DataFrame
 ) -> pd.DataFrame:
     
     dataframe = input_dataframe.copy()
@@ -63,9 +61,9 @@ def generic_treatment(
     dataframe = dataframe[dataframe['filter'] != '1']
     dataframe = dataframe.drop('filter', axis=1)
 
-    # ajustando a estrutura do DataFrame, criando 3 colunas - descricao, mes, valor
+    # ajustando a estrutura do DataFrame, criando 3 colunas - subcategoria, mes, valor
     dataframe = dataframe.melt(id_vars='Mês', var_name='mes', value_name='valor')
-    dataframe.rename(columns={'Mês': 'descricao'}, inplace=True)
+    dataframe.rename(columns={'Mês': 'subcategoria'}, inplace=True)
 
     # ajustando os valores das colunas valor e mes
     dataframe['valor'] = dataframe['valor'].str.strip().str.replace(r'^R\$', '', regex=True)
@@ -75,44 +73,33 @@ def generic_treatment(
     dataframe['valor'] = dataframe['valor'].astype(float)
     dataframe['mes'] = pd.to_datetime(dataframe['mes'], format='%m-%Y')
 
-    # filtrando dataframe pela categoria
-    if category:
-        dataframe = dataframe[dataframe['descricao'].isin(categories_dict(input_dataframe)[category])]
+    # acrescentando a coluna categoria no dataframe
+    categories = categories_dict(input_dataframe)
+    def map_category(value):
+        for category, items in categories.items():
+            if value in items:
+                return category
+        return None
+            
+    dataframe['categoria'] = dataframe['subcategoria'].apply(map_category)
 
     # resetando indices do dataframe
     dataframe = dataframe.reset_index().drop('index', axis=1)
 
-    # renomeando as descrições
-    dataframe['descricao'] = dataframe['descricao'].apply(snake_case)
+    # renomeando as categorias e subcategorias
+    dataframe['categoria'] = dataframe['categoria'].apply(snake_case)
+    dataframe['subcategoria'] = dataframe['subcategoria'].apply(snake_case)
+
+    # reordenando as colunas
+    dataframe = dataframe[['categoria', 'subcategoria', 'mes', 'valor']]
 
     return dataframe
 
 
-def generic_partial_writer(
+def generic_writer(
         input_dataframe: pd.DataFrame,
-        category: str,
-        schema_name: str,
         table_name: str,
 ) -> None:
     
-    dataframe = generic_treatment(input_dataframe, category)
-    storage_writer(dataframe, f'silver/{schema_name}/{table_name}.csv')
-
-
-def generic_writer(
-        input_dataframe: pd.DataFrame,
-        schema_name: str
-) -> None:
-    
-    table_name_dict = dict()
-    categories = categories_dict(input_dataframe)
-    for category in categories:
-        table_name_dict[category] = snake_case(category)
-
-    print('Dicionário de categorias encontrado: \n', json.dumps(table_name_dict, indent=4, ensure_ascii=False))
-    print('\n')
-
-    for category in table_name_dict:
-        table_name = table_name_dict[category]
-        generic_partial_writer(input_dataframe, category, schema_name, table_name)
-        print(f'Tabela {schema_name}.{table_name} escrita no Google Storage! \n')
+    dataframe = generic_treatment(input_dataframe)
+    storage_writer(dataframe, f'operational/{table_name}.csv')
