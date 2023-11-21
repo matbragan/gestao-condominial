@@ -1,6 +1,4 @@
-from utils.google_storage import storage_reader
-from etl.operational.generic_financial import generic_writer
+from etl.operational.source import operational_writer
+from etl.operational.generic_financial import generic_treatment
 
-dataframe = storage_reader('extraction/receita.csv')
-
-generic_writer(dataframe, 'receita')
+operational_writer('receita', generic_treatment)

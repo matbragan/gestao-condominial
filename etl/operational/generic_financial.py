@@ -1,7 +1,6 @@
-import unicodedata
 import pandas as pd
 
-from utils.google_storage import storage_writer
+from etl.operational.source import snake_case
 
 
 def categories_dict(
@@ -25,26 +24,6 @@ def categories_dict(
         categories_dict[category] = dataframe.iloc[index[1]+1:next_index]['Mês'].tolist()
 
     return categories_dict
-
-
-def snake_case(
-        input_str: str
-) -> str:
-    
-    # remover acentos
-    nfkd_form = unicodedata.normalize('NFKD', input_str)
-    input_str = ''.join([c for c in nfkd_form if not unicodedata.combining(c)])
-
-    # caixa baixa
-    input_str = input_str.lower()
-
-    # snake case
-    str_to_snake = [ ' (', ' - ', ' + ', ' ', '(', '/', '-', "'", '.' ]
-    for str in str_to_snake:
-        input_str = input_str.replace(str, '_')
-    input_str = input_str.replace(')', '')
-
-    return input_str
 
 
 def generic_treatment(
@@ -94,12 +73,3 @@ def generic_treatment(
     dataframe = dataframe[['categoria', 'subcategoria', 'mes', 'valor']]
 
     return dataframe
-
-
-def generic_writer(
-        input_dataframe: pd.DataFrame,
-        table_name: str,
-) -> None:
-    
-    dataframe = generic_treatment(input_dataframe)
-    storage_writer(dataframe, f'operational/{table_name}.csv')
