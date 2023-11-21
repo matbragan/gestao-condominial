@@ -6,6 +6,11 @@ Extensão - Desenvolvimento de Projeto de Business Intelligence - 2023/02
 
 <br>
 
+### Google Cloud
+O projeto faz uso do Google Cloud, portanto as interações - extração e ingestão de dados - necessitam do credenciamento com a Google Cloud, tal credenciamento está sendo feito através de um arquivo chamado google_credential.json, que por motivos de segurança não está sendo exposto neste repositório do GitHub.
+
+Para mais informações, sobre credenciamento da Google, acesse o link: [Google Credenciamento](https://developers.google.com/workspace/guides/create-credentials?hl=pt-br)
+
 ### Comandos úteis
 1. Criação de um ambiente virtual para o python, necessário ter venv instalado
     ~~~sh
