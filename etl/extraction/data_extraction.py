@@ -21,15 +21,18 @@ def raw_extraction(table_name: str) -> None:
     if type(dataframe.columns) == pd.RangeIndex:
         dataframe.columns = dataframe.iloc[0]
         dataframe = dataframe[1:].reset_index().drop('index', axis=1)
-        logging.info(f"Table {table_name} - Automatic pandas index correction done!")
 
     try:
         storage_writer(dataframe, f'extraction/{table_name}.csv')
-        logging.info(f"Table {table_name} - Google Storage writer Completed!")
+        logging.info(f"Extraction writer {table_name} Completed!")
     except Exception as e:
-        logging.warning(f"Google Storage writer Fatal Error: {e}")
+        logging.warning(f"Extraction writer {table_name} Fatal Error: {e}")
+
+
+def run() -> None:
+    for table in TABLES:
+        raw_extraction(table)
 
 
 if __name__ == "__main__":
-    for table in TABLES:
-        raw_extraction(table)
+    run()
