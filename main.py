@@ -1,11 +1,7 @@
 import importlib
-import logging
 
 from etl import TABLES
 from utils.bigquery import load_tables
-
-log_format = '%(asctime)s - %(levelname)s - %(message)s'
-logging.basicConfig(format=log_format, level=logging.INFO)
 
 
 def run_module(module_path):
@@ -24,11 +20,7 @@ def main():
     for module_path in modules:
         run_module(module_path)
 
-    try:
-        load_tables("operational")
-        logging.info("Operational Tables load in BigQuery")
-    except Exception as e:
-        logging.warning(f"Fatal Error loading tables in BigQuery: {e}")
+    load_tables("operational")
 
 
 if __name__ == "__main__":
