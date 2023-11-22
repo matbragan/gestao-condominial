@@ -11,6 +11,7 @@ logging.basicConfig(format=log_format, level=logging.INFO)
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_CREDENTIALS
 
+
 def load_tables(
         layer: str,
         project_id: str = PROJECT_ID,
@@ -44,6 +45,6 @@ def load_tables(
                 load_job.result()
 
                 destination_table = client.get_table(table_id)
-                logging.info(f'{dataset}.{table} Load to BigQuery, with {destination_table.num_rows} rows.')
+                logging.info(f'Load to BigQuery {dataset}.{table}, with {destination_table.num_rows} rows.')
             except Exception as e:
-                logging.warning(f'{dataset}.{table} Exception to Load to BigQuery: {e}')
+                logging.warning(f'Exception to Load to BigQuery {dataset}.{table}: {e}')
