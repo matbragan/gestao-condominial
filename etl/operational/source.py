@@ -58,24 +58,25 @@ def generic_treatment(
         new_column = snake_case(column)
         dataframe = dataframe.rename(columns={column: new_column})
 
-    return dataframe
+    # mapeando as colunas do dataframe e tratando-as conforme necessidade
+    for column in dataframe.columns:
+        if "unidade" in column:
+            # preenchendo unidades vazias
+            dataframe[column] = dataframe[column].ffill()
 
+            # separando a coluna unidade em edificio e apartamento
+            dataframe[['apartamento', 'edificio']] = dataframe[column].str.extract(r'(\d+) (.+)')
 
-def moradores_treatment(
-        input_dataframe: pd.DataFrame
-) -> pd.DataFrame:
-    
-    dataframe = input_dataframe.copy()
-    dataframe = generic_treatment(dataframe)
+            # reordenando as colunas
+            dataframe = pd.concat([dataframe[['edificio', 'apartamento']], dataframe.drop(['edificio', 'apartamento', column], axis=1)], axis=1)
 
-    # preenchendo unidades vazias
-    dataframe['unidade'] = dataframe['unidade'].ffill()
-
-    # separando a coluna unidade em edificio e apartamento
-    dataframe[['apartamento', 'edificio']] = dataframe['unidade'].str.extract(r'(\d+) (.+)')
-
-    # reordenando as colunas
-    dataframe = pd.concat([dataframe[['edificio', 'apartamento']], dataframe.drop(['edificio', 'apartamento', 'unidade'], axis=1)], axis=1)
+        if "valor" in column:
+            # ajustando os valores das colunas valor
+            dataframe[column] = dataframe[column].str.strip().str.replace(r'^R\$', '', regex=True)
+            dataframe[column] = dataframe[column].str.replace(r'\s+', '', regex=True)
+            dataframe[column] = dataframe[column].str.replace(r'\.', '', regex=True)
+            dataframe[column] = dataframe[column].str.replace(r',', '.', regex=True)
+            dataframe[column] = dataframe[column].astype(float)
 
     return dataframe
 

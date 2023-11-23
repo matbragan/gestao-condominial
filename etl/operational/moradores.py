@@ -1,8 +1,8 @@
-from etl.operational.source import operational_writer, moradores_treatment
+from etl.operational.source import operational_writer, generic_treatment
 
 
 def run() -> None:
-    operational_writer("moradores", moradores_treatment)
+    operational_writer("moradores", generic_treatment)
 
 
 if __name__ == "__main__":
