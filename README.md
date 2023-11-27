@@ -6,10 +6,18 @@ Extensão - Desenvolvimento de Projeto de Business Intelligence - 2023/02
 
 <br>
 
+### Desenho da modelagem de dados do Data Warehouse
+<img src="doc/dw_modeling.png">
+
+<br>
+
+### Fonte de dados
+A fonta de dados do projeto se encontra neste [Google Sheets](https://docs.google.com/spreadsheets/d/1CYZR2Oa_7uhvMWP65WlkvpoUUwQkLT0UV3cUhSvszGg/edit#gid=0). O mesmo só está com permissão para o cliente e o grupo do projeto, por conter dados sensíveis.
+
 ### Google Cloud
 O projeto faz uso do Google Cloud, portanto as interações - extração e ingestão de dados - necessitam do credenciamento com a Google Cloud, tal credenciamento está sendo feito através de um arquivo chamado google_credential.json, que por motivos de segurança não está sendo exposto neste repositório do GitHub.
 
-Para mais informações, sobre credenciamento da Google, acesse o link: [Google Credenciamento](https://developers.google.com/workspace/guides/create-credentials?hl=pt-br)
+Para mais informações, sobre credenciamento da Google, acesse o link: [Google Credenciamento](https://developers.google.com/workspace/guides/create-credentials?hl=pt-br).
 
 ### Comandos úteis
 1. Criação de um ambiente virtual para o python, necessário ter venv instalado
