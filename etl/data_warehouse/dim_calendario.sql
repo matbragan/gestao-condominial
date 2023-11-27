@@ -1,4 +1,4 @@
-create table data_warehouse.dim_calendario as
+create or replace table data_warehouse.dim_calendario as
 select
 	row_number() over () as calendario_id
 ,  	`data`

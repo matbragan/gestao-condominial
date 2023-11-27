@@ -1,4 +1,4 @@
-create table data_warehouse.dim_categorias as 
+create or replace table data_warehouse.dim_categorias as 
 with despesas as (
 select distinct
 	'Despesas' as tipo

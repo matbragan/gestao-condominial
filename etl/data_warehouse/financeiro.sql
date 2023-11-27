@@ -1,5 +1,4 @@
---create table data_warehouse.financeiro as 
-create table data_warehouse.financeiro as 
+create or replace table data_warehouse.financeiro as 
 with despesas as (
 select distinct
 	'Despesas' as tipo
@@ -47,4 +46,4 @@ from
 	join data_warehouse.dim_calendario cal
 		on fin.`data` = cal.`data` 
 	join data_warehouse.dim_categorias cat
-		on fin.tipo = cat.tipo and fin.categoria = cat.categoria and fin.subcategoria = cat.subcategoria
+		on fin.tipo = cat.tipo and fin.categoria = cat.categoria and fin.subcategoria = cat.subcategoria;
