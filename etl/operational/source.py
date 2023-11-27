@@ -144,8 +144,8 @@ def financial_generic_treatment(
     dataframe = dataframe.reset_index().drop('index', axis=1)
 
     # renomeando as categorias e subcategorias
-    dataframe['categoria'] = dataframe['categoria'].apply(snake_case)
-    dataframe['subcategoria'] = dataframe['subcategoria'].apply(snake_case)
+    # dataframe['categoria'] = dataframe['categoria'].apply(snake_case)
+    # dataframe['subcategoria'] = dataframe['subcategoria'].apply(snake_case)
 
     # reordenando as colunas
     dataframe = dataframe[['categoria', 'subcategoria', 'mes', 'valor']]
