@@ -2,7 +2,7 @@ from etl.operational.source import operational_writer, financial_generic_treatme
 
 
 def run() -> None:
-    operational_writer("receita", financial_generic_treatment)
+    operational_writer("ganhos", financial_generic_treatment)
 
 
 if __name__ == "__main__":

@@ -7,17 +7,17 @@ select distinct
 from
   	operational.despesas
 ), 
-receita as (
+ganhos as (
 select distinct
-  	'Receita' as tipo
+  	'Ganhos' as tipo
 , 	categoria
 , 	subcategoria
 from
-  	operational.receita
+  	operational.ganhos
 ),
 lazer as (
 select distinct
-  	'Receita' as tipo
+  	'Ganhos' as tipo
 , 	'uso_area_lazer' as categoria 
 , 	nome as subcategoria
 from
@@ -26,7 +26,7 @@ from
 union_categorias as (
 select * from despesas
 union all
-select * from receita
+select * from ganhos
 union all
 select * from lazer
 )
