@@ -48,3 +48,19 @@ def load_tables(
                 logging.info(f'Load to BigQuery {dataset}.{table}, with {destination_table.num_rows} rows.')
             except Exception as e:
                 logging.warning(f'Exception to Load to BigQuery {dataset}.{table}: {e}')
+
+
+def run_sql_file_query(
+        file_path: str
+) -> None:
+    client = bigquery.Client()
+
+    with open(file_path, "r") as file:
+        query = file.read()
+
+    try:
+        query_job = client.query(query)
+        query_job.result()
+        logging.info(f'Successful Query {file_path} in BigQuery.')
+    except Exception as e:
+        logging.warning(f'Exception running Query {file_path} in BigQuery: {e}')

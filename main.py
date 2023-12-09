@@ -1,7 +1,7 @@
 import importlib
 
-from etl import TABLES
-from utils.bigquery import load_tables
+from etl import TABLES, DW_TABLES
+from utils.bigquery import load_tables, run_sql_file_query
 
 
 def run_module(module_path):
@@ -21,6 +21,11 @@ def main():
         run_module(module_path)
 
     load_tables("operational")
+
+    for dw_table in DW_TABLES:
+        run_sql_file_query(f"etl/data_warehouse/{dw_table}.sql")
+
+    run_sql_file_query("etl/data_warehouse/data_viz.sql")
 
 
 if __name__ == "__main__":
