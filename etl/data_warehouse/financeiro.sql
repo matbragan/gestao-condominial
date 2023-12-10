@@ -22,7 +22,7 @@ from
 lazer as (
 select distinct
   	'Ganhos' as tipo
-, 	'uso_area_lazer' as categoria 
+, 	'USO AREA LAZER' as categoria 
 , 	nome as subcategoria
 ,	data_uso as `data`
 ,	valor_pago as valor
