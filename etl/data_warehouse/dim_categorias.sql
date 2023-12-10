@@ -19,7 +19,7 @@ lazer as (
 select distinct
   	'Ganhos' as tipo
 , 	'USO AREA LAZER' as categoria 
-, 	nome as subcategoria
+, 	concat(apartamento, ' ', edificio) as subcategoria
 from
   	operational.lazer
 ),

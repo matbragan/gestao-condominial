@@ -23,7 +23,7 @@ lazer as (
 select distinct
   	'Ganhos' as tipo
 , 	'USO AREA LAZER' as categoria 
-, 	nome as subcategoria
+, 	concat(apartamento, ' ', edificio) as subcategoria
 ,	data_uso as `data`
 ,	valor_pago as valor
 from
